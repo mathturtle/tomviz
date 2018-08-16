@@ -67,10 +67,10 @@ class CrossCorrelationAlignmentOperator(tomviz.operators.CancelableOperator):
         utils.set_array(dataset, tiltSeries)
 
         # Assign Negative Shifts when Shift > N/2.
-        max_indeces_X = np.where(offsets > tiltSeries.shape[0] / 2)
-        offsets[max_indeces_X] = offsets[max_indeces_X] - tiltSeries.shape[0]
-        max_indeces_Y = np.where(offsets > tiltSeries.shape[1] / 2)
-        offsets[max_indeces_Y] = offsets[max_indeces_Y] - tiltSeries.shape[1]
+        max_indeces_X = np.where(offsets[:, 0] > tiltSeries.shape[0] / 2)
+        offsets[max_indeces_X, 0] -= tiltSeries.shape[0]
+        max_indeces_Y = np.where(offsets[:, 1] > tiltSeries.shape[1] / 2)
+        offsets[max_indeces_Y, 1] -= tiltSeries.shape[1]
 
         # Create a spreadsheet data set from table data
         column_names = ["X Offset", "Y Offset"]
